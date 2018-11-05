@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 一锤子买卖 | 喵星球的博人传</title>
+  <title>线上报表R方案 | 喵星球的博人传</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="毕业广州某校，目前在百度任职，打杂数据，闲时喜欢做饭看书。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="喵星球的博人传">
-<meta property="og:url" content="http://yoursite.com/tags/一锤子买卖/index.html">
+  <meta name="description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
+<meta name="keywords" content="数据菜谱,可视化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线上报表R方案">
+<meta property="og:url" content="http://yoursite.com/2018/05/19/数据-线上化报表R方案/index.html">
 <meta property="og:site_name" content="喵星球的博人传">
-<meta property="og:description" content="毕业广州某校，目前在百度任职，打杂数据，闲时喜欢做饭看书。">
+<meta property="og:description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-25T09:07:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="喵星球的博人传">
-<meta name="twitter:description" content="毕业广州某校，目前在百度任职，打杂数据，闲时喜欢做饭看书。">
+<meta name="twitter:title" content="线上报表R方案">
+<meta name="twitter:description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
   
     <link rel="alternative" href="/atom.xml" title="喵星球的博人传" type="application/atom+xml">
   
@@ -149,36 +151,173 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-数据-线上化报表R方案" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/18/零售杂货铺/" class="archive-article-date">
-  	<time datetime="2018-05-18T06:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/18/零售杂货铺/">零售杂货铺</a>
+    <h1 class="article-title" itemprop="name">
+      线上报表R方案
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/05/19/数据-线上化报表R方案/" class="archive-article-date">
+  	<time datetime="2018-05-19T06:48:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、序言"><a href="#一、序言" class="headerlink" title="一、序言"></a>一、序言</h2><p>作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。</p>
+<a id="more"></a>
+<p>仅仅以报表形式为例子，仔细去探索就会很多方案和工具，例如业界很出名<code>的teableau</code>等一体化的工具，也有部署方案的阿里<code>dataV</code>,度厂的<code>sugur</code>等等，也有开源方案<code>superset</code>等等，各种工具和方案有自己的好处和弊端（例如要价高、需要专门开发）。此处不对这些方案或者工具做比较和评价，咖啡是苦是甜终究是要自己去尝试的。</p>
+<p>下面我会详细说一个小方案和工具，基于R和shiny-server的线上化报表方案，直接<a href="https://liwenjun.shinyapps.io/p_ok/" target="_blank" rel="noopener"><em>进入传送门</em></a>查看。</p>
+<p>为什么要介绍这个方案呢，主要是相对于一个从头到尾包办的人来说，<strong><em>体量轻</em></strong>且<strong><em>便捷免费</em></strong>的工具就是天赐的礼物，这里感谢开源的人和组织！</p>
+<p>好了，废话不多说，直接上菜吧。</p>
+<h2 id="二、部署shiny-server流程步骤说明"><a href="#二、部署shiny-server流程步骤说明" class="headerlink" title="二、部署shiny-server流程步骤说明"></a>二、部署shiny-server流程步骤说明</h2><hr>
+<p> <strong>1.  安装准备：</strong><br>①准备材料：<br>一台内存不那么小的电脑就可以了<br>②安装虚拟机<br>这一步的目的是安装Ubuntu作为shiny-sever的服务器载体。<br>如果你的电脑没有，则从头安装。直接<a href="https://linux.cn/article-5893-1.html" target="_blank" rel="noopener"><em>进入传送门</em></a>参考相关内容。<br>③设置共享文件夹<br>这一步是为了方便宿主机的复制粘贴和文件复制等等。</p>
+<p><em>代码示例</em></p>
+<blockquote>
+<p>$ sudo mount -t vboxsf vmshare /mnt/vmshare</p>
+</blockquote>
+<p><em>ps:不要勾选自动挂载，每次重启失效后使用代码跑一下就可以了</em></p>
+<p> <strong>2. 安装基础软件</strong><br>①输入法软件<br>目前Ubuntu都已经自带中文拼音了，这一步可省去。</p>
+<p>②安装R</p>
+<blockquote>
+<p>$ sudo apt-get install r-base</p>
+</blockquote>
+<blockquote>
+<p>$ sudo apt-get install r-base-dev</p>
+</blockquote>
+<p>③安装Rstudio<br>下载安装包，如有则跳过</p>
+<blockquote>
+<p>$ wget <a href="https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb" target="_blank" rel="noopener">https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb</a></p>
+</blockquote>
+<blockquote>
+<p>$ sudo apt-get install gdebi-core</p>
+</blockquote>
+<blockquote>
+<p>$ sudo gdebi rstudio-xenial-1.1.453-amd64.deb</p>
+</blockquote>
+<p>④安装R包</p>
+<blockquote>
+<p>安装相关依赖<br>$ sudo apt-get install libcurl4-openssl-dev</p>
+</blockquote>
+<p>安装其他R包的工具</p>
+<blockquote>
+<p>install.packages(“devtools”,dependencies = TRUE)<br>如果报错，参考<a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04" target="_blank" rel="noopener">这里</a></p>
+</blockquote>
+<p>⑤安装JDK<br>这一步的目的是为了调用java。安装教程网上很多，直接参考<a href="https://www.jianshu.com/p/95f075761dc0" target="_blank" rel="noopener">这里</a></p>
+<p>⑥设置R的java环境<br>在shell里面输入</p>
+<blockquote>
+<p>$ R CMD javareconf</p>
+</blockquote>
+<p>在R里面输入：</p>
+<blockquote>
+<p>install.packages(‘rJava’, depentences = T)</p>
+</blockquote>
+<p>如上两步报错，则执行下面的命令,如果还是报错，自己排查</p>
+<blockquote>
+<p>$ sudo apt-get install default-jdk</p>
+</blockquote>
+<blockquote>
+<p>$ sudo apt-get install r-cran-rjava</p>
+</blockquote>
+<p>⑦安装unixODBC<br>这一步目的是为了R连接MSSQL等数据库，进行数据交互。<br>首先进入<a href="https://www.linuxidc.com/Linux/2011-05/36367.htm" target="_blank" rel="noopener">下载页</a>下载文件，接着进行解压安装。</p>
+<p><em>参考命令如下，记得把软件版本换成对应的</em></p>
+<blockquote>
+<p>$ sudo tar xzf unixODBC-*.tar.gz </p>
+</blockquote>
+<blockquote>
+<p>$ sudo cd unixODBC-* </p>
+</blockquote>
+<blockquote>
+<p>$ sudo</p>
+</blockquote>
+<blockquote>
+<p>./configure </p>
+</blockquote>
+<blockquote>
+<p>$ sudo make</p>
+</blockquote>
+<blockquote>
+<p>$ sudo make install</p>
+</blockquote>
+<h6 id="注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装"><a href="#注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装" class="headerlink" title="注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装."></a><em>注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装.</em></h6><p>⑧如果你用的是MSSQL，则还需要安装 FreeTDS<br>首先去<a href="ftp://ftp.freetds.org/pub/freetds/stable/" target="_blank" rel="noopener">下载页</a>下载安装文件，接着进行解压安装。</p>
+<p>1）安装，这一步很直接，使用root权限就可以了。</p>
+<blockquote>
+<p>$ tar xzf freetds-<em>.tgz<br>$ cd freetds-</em><br>$ ./configure –with-unixodbc=/usr/local –with-tdsver=7.0<br>$ sudo make<br>$ sudo su<br>$ sudo make install</p>
+</blockquote>
+<p>2）配置文件<br>这一步的目的是向unixODBC 登记 FreeTDS 驱动。<br>首先是修改 /etc/odbcinst.ini，运行下面的命令即可修改。</p>
+<blockquote>
+<p>$ cd /usr/local/etc </p>
+</blockquote>
+<blockquote>
+<p>$ sudo gedit /usr/local/etc/odbc.ini</p>
+</blockquote>
+<p><em>修改参考样式如下：</em></p>
+<blockquote>
+<p>[ODBC Data Sources]<br>sql_test = MS SQL td test3<br>[sql_test]<br>Driver = /usr/local/lib/libtdsodbc.so<br>Description  = MSS SQL td test3<br>Server       = 192.12.27.43<br>Port         = 8837<br>User         = sa<br>Password     = 12345<br>Database     = test_db<br>Option       = 3<br>Socket       =<br>Trace        = No<br>TDS_VERSION  = 7.0<br>[Default]<br>Driver  = /usr/local/lib/libtdsodbc.so</p>
+</blockquote>
+<p>⑨安装R包RODBC  ,验证数据库配置是否成功</p>
+<blockquote>
+<p>library(RODBC)<br>sh &lt;- odbcConnect(‘sql_test’,uid = ‘sa’,pwd =’12345’)<br>ata &lt;- sqlQuery(sh,”SQL语句”)</p>
+</blockquote>
+<p>ps:</p>
+<blockquote>
+<p>上面安装R包RODBC如报错则使用下面的命令先安装依赖<br>sudo apt-get install libiodbc2-dev</p>
+</blockquote>
+<p>如果你已经看到这，说明前面的铺垫工作已经进行好了。</p>
+<p><strong>3、安装shiny-sever-pro</strong><br>说真的，没有什么比官网更好的文档了。<br>按照<a href="https://www.rstudio.com/products/shiny/download-server/" target="_blank" rel="noopener">传送门</a>去运行相关命令就行了。</p>
+<blockquote>
+<p>好好看看我的眼，好好看看我的眼，以前我眼都是你，现在，我的眼都是文档。</p>
+</blockquote>
+<p>如果看到这里，你就安装好了shiny-server整个环境需求，接下来就安心去写展示脚本和进行一下更深入的探索吧，例如<strong>权限控制</strong>、<strong>负载均衡</strong>等等。</p>
+<h2 id="三、结尾"><a href="#三、结尾" class="headerlink" title="三、结尾"></a>三、结尾</h2><p>对了，我的展示案例是发布在shinyapps.io上，我这里是为了简单。</p>
+<p>如果部署shiny app官方有两种方式，一是官方的提供的平台，一个就是自己部署服务器。一般来说，内部数据都是要求保密的，所以都是自己部署公司内部的平台。</p>
+<p>如果你还有更多的想法，也可以沟通，如果还有其他我能帮助你的也联系我。<br>谢谢，喵生一乐。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/ali.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -188,25 +327,121 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">一锤子买卖</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">可视化</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/19/数据-线上化报表R方案/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/08/19/数据-大数据时代的精准数据挖掘——使用R语言/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          大数据时代的精准数据挖掘——使用R语言
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/05/19/数据-线上化报表P方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线上报表P方案</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -229,9 +464,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
