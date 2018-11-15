@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>线上报表R方案 | 喵星球的博人传</title>
+  <title>另一种可能系列之shiny-server | 喵星球的博人传</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
-<meta name="keywords" content="数据菜谱,可视化">
+<meta name="keywords" content="R,服务器,可视化,另一种可能,数据菜谱">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线上报表R方案">
+<meta property="og:title" content="另一种可能系列之shiny-server">
 <meta property="og:url" content="http://yoursite.com/2018/05/19/数据-线上化报表R方案/index.html">
 <meta property="og:site_name" content="喵星球的博人传">
 <meta property="og:description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-25T09:07:40.000Z">
+<meta property="og:image" content="http://yoursite.com/assets/blogImg/r-1.png">
+<meta property="og:updated_time" content="2018-11-15T06:21:41.882Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="线上报表R方案">
+<meta name="twitter:title" content="另一种可能系列之shiny-server">
 <meta name="twitter:description" content="一、序言作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。">
+<meta name="twitter:image" content="http://yoursite.com/assets/blogImg/r-1.png">
   
     <link rel="alternative" href="/atom.xml" title="喵星球的博人传" type="application/atom+xml">
   
@@ -158,7 +160,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      线上报表R方案
+      另一种可能系列之shiny-server
     </h1>
   
 
@@ -173,112 +175,30 @@
       
         <h2 id="一、序言"><a href="#一、序言" class="headerlink" title="一、序言"></a>一、序言</h2><p>作为一个数据民工，既要对底层数据进行操作、清洗，也要把数据的信息展示出来。每个公司都会有报表，报表也是最基础的展示数据信息方式之一。</p>
 <a id="more"></a>
-<p>仅仅以报表形式为例子，仔细去探索就会很多方案和工具，例如业界很出名<code>的teableau</code>等一体化的工具，也有部署方案的阿里<code>dataV</code>,度厂的<code>sugur</code>等等，也有开源方案<code>superset</code>等等，各种工具和方案有自己的好处和弊端（例如要价高、需要专门开发）。此处不对这些方案或者工具做比较和评价，咖啡是苦是甜终究是要自己去尝试的。</p>
-<p>下面我会详细说一个小方案和工具，基于R和shiny-server的线上化报表方案，直接<a href="https://liwenjun.shinyapps.io/p_ok/" target="_blank" rel="noopener"><em>进入传送门</em></a>查看。</p>
-<p>为什么要介绍这个方案呢，主要是相对于一个从头到尾包办的人来说，<strong><em>体量轻</em></strong>且<strong><em>便捷免费</em></strong>的工具就是天赐的礼物，这里感谢开源的人和组织！</p>
+<p>shiny-server是一种可用把R 语言以web形式展示的服务,shiny可以快速的制作我们想要的web应用，但是我们发布我们的应用到内网或者公网，我们还需要一个平台。<br>仅仅以报表形式为例子，仔细去探索就会很多方案和工具，例如业界很出名的<code>teableau</code>等一体化的工具，也有部署方案的阿里<code>dataV</code>,度厂的<code>sugur</code>等等，也有开源方案<code>superset</code>等等，各种工具和方案有自己的好处和弊端（例如要价高、需要专门开发）。此处不对这些方案或者工具做比较和评价，咖啡是苦是甜终究是要自己去尝试的。<br>下面我会详细说一个小方案和工具，基于R和shiny-server的线上化报表方案，直接<a href="https://liwenjun.shinyapps.io/p_ok/" target="_blank" rel="noopener"><em>进入传送门</em></a>查看。<br>为什么要介绍这个方案呢，主要是相对于一个从头到尾包办的人来说，<strong><em>体量轻</em></strong>且<strong><em>便捷免费</em></strong>的工具就是天赐的礼物，这里感谢开源的人和组织！</p>
 <p>好了，废话不多说，直接上菜吧。</p>
 <h2 id="二、部署shiny-server流程步骤说明"><a href="#二、部署shiny-server流程步骤说明" class="headerlink" title="二、部署shiny-server流程步骤说明"></a>二、部署shiny-server流程步骤说明</h2><hr>
-<p> <strong>1.  安装准备：</strong><br>①准备材料：<br>一台内存不那么小的电脑就可以了<br>②安装虚拟机<br>这一步的目的是安装Ubuntu作为shiny-sever的服务器载体。<br>如果你的电脑没有，则从头安装。直接<a href="https://linux.cn/article-5893-1.html" target="_blank" rel="noopener"><em>进入传送门</em></a>参考相关内容。<br>③设置共享文件夹<br>这一步是为了方便宿主机的复制粘贴和文件复制等等。</p>
-<p><em>代码示例</em></p>
+<p> <strong>1.  安装准备：</strong><br>①准备材料：<br>一台内存不那么小的电脑就可以了<br>②安装虚拟机<br>这一步的目的是安装Ubuntu作为shiny-sever的服务器载体。<br>如果你的电脑没有，则从头安装。直接<a href="https://linux.cn/article-5893-1.html" target="_blank" rel="noopener"><em>进入传送门</em></a>参考相关内容。<br>③设置共享文件夹<br>这一步是为了方便宿主机的复制粘贴和文件复制等等。<br><em>代码示例</em></p>
 <blockquote>
 <p>$ sudo mount -t vboxsf vmshare /mnt/vmshare</p>
 </blockquote>
 <p><em>ps:不要勾选自动挂载，每次重启失效后使用代码跑一下就可以了</em></p>
-<p> <strong>2. 安装基础软件</strong><br>①输入法软件<br>目前Ubuntu都已经自带中文拼音了，这一步可省去。</p>
-<p>②安装R</p>
+<p> <strong>2. 安装基础软件</strong><br>①输入法软件<br>目前Ubuntu都已经自带中文拼音了，这一步可省去。<br>②安装R</p>
 <blockquote>
-<p>$ sudo apt-get install r-base</p>
-</blockquote>
-<blockquote>
-<p>$ sudo apt-get install r-base-dev</p>
+<p>$ sudo apt-get install r-base<br>$ sudo apt-get install r-base-dev</p>
 </blockquote>
 <p>③安装Rstudio<br>下载安装包，如有则跳过</p>
 <blockquote>
-<p>$ wget <a href="https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb" target="_blank" rel="noopener">https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb</a></p>
+<p>$ wget <a href="https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb" target="_blank" rel="noopener">https://download1.rstudio.org/rstudio-xenial-1.1.453-amd64.deb</a><br>$ sudo apt-get install gdebi-core<br>$ sudo gdebi rstudio-xenial-1.1.453-amd64.deb<br>④安装R包<br>安装相关依赖<br>$ sudo apt-get install libcurl4-openssl-dev<br>安装其他R包的工具<br>install.packages(“devtools”,dependencies = TRUE)<br>如果报错，参考<a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04" target="_blank" rel="noopener">这里</a><br>⑤安装JDK<br>这一步的目的是为了调用java。安装教程网上很多，直接参考<a href="https://www.jianshu.com/p/95f075761dc0" target="_blank" rel="noopener">这里</a><br>⑥设置R的java环境<br>在shell里面输入<br>$ R CMD javareconf<br>在R里面输入：<br>install.packages(‘rJava’, depentences = T)<br>如上两步报错，则执行下面的命令,如果还是报错，自己排查<br>$ sudo apt-get install default-jdk<br>$ sudo apt-get install r-cran-rjava<br>⑦安装unixODBC<br>这一步目的是为了R连接MSSQL等数据库，进行数据交互。<br>首先进入<a href="https://www.linuxidc.com/Linux/2011-05/36367.htm" target="_blank" rel="noopener">下载页</a>下载文件，接着进行解压安装。<br><em>参考命令如下，记得把软件版本换成对应的</em><br>$ sudo tar xzf unixODBC-<em>.tar.gz<br>$ sudo cd unixODBC-</em><br>$ sudo<br>./configure<br>$ sudo make<br>$ sudo make install</p>
 </blockquote>
+<h6 id="注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装"><a href="#注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装" class="headerlink" title="注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装."></a><em>注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装.</em></h6><p>⑧如果你用的是MSSQL，则还需要安装 FreeTDS<br>首先去<a href="ftp://ftp.freetds.org/pub/freetds/stable/" target="_blank" rel="noopener">下载页</a>下载安装文件，接着进行解压安装。<br>1）安装，这一步很直接，使用root权限就可以了。</p>
 <blockquote>
-<p>$ sudo apt-get install gdebi-core</p>
+<p>$ tar xzf freetds-<em>.tgz<br>$ cd freetds-</em><br>$ ./configure –with-unixodbc=/usr/local –with-tdsver=7.0<br>$ sudo make<br>$ sudo su<br>$ sudo make install<br>2）配置文件<br>这一步的目的是向unixODBC 登记 FreeTDS 驱动。<br>首先是修改 /etc/odbcinst.ini，运行下面的命令即可修改。<br>$ cd /usr/local/etc<br>$ sudo gedit /usr/local/etc/odbc.ini<br><em>修改参考样式如下：</em><br>[ODBC Data Sources]<br>sql_test = MS SQL td test3<br>[sql_test]<br>Driver = /usr/local/lib/libtdsodbc.so<br>Description  = MSS SQL td test3<br>Server       = 192.12.27.43<br>Port         = 8837<br>User         = sa<br>Password     = 12345<br>Database     = test_db<br>Option       = 3<br>Socket       =<br>Trace        = No<br>TDS_VERSION  = 7.0<br>[Default]<br>Driver  = /usr/local/lib/libtdsodbc.so<br>⑨安装R包RODBC  ,验证数据库配置是否成功<br>library(RODBC)<br>sh &lt;- odbcConnect(‘sql_test’,uid = ‘sa’,pwd =’12345’)<br>ata &lt;- sqlQuery(sh,”SQL语句”)<br>ps:<br>上面安装R包RODBC如报错则使用下面的命令先安装依赖<br>sudo apt-get install libiodbc2-dev<br>如果你已经看到这，说明前面的铺垫工作已经进行好了。<br><strong>3、安装shiny-sever-pro</strong><br>说真的，没有什么比官网更好的文档了。<br>按照<a href="https://www.rstudio.com/products/shiny/download-server/" target="_blank" rel="noopener">传送门</a>去运行相关命令就行了。<br><img src="/assets/blogImg/r-1.png" alt=""><br>好好看看我的眼，好好看看我的眼，以前我眼都是你，现在，我的眼都是文档。<br>如果看到这里，你就安装好了shiny-server整个环境需求，接下来就安心去写展示脚本和进行一下更深入的探索吧，例如<strong>权限控制</strong>、<strong>负载均衡</strong>等等。</p>
 </blockquote>
-<blockquote>
-<p>$ sudo gdebi rstudio-xenial-1.1.453-amd64.deb</p>
-</blockquote>
-<p>④安装R包</p>
-<blockquote>
-<p>安装相关依赖<br>$ sudo apt-get install libcurl4-openssl-dev</p>
-</blockquote>
-<p>安装其他R包的工具</p>
-<blockquote>
-<p>install.packages(“devtools”,dependencies = TRUE)<br>如果报错，参考<a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-r-on-ubuntu-14-04" target="_blank" rel="noopener">这里</a></p>
-</blockquote>
-<p>⑤安装JDK<br>这一步的目的是为了调用java。安装教程网上很多，直接参考<a href="https://www.jianshu.com/p/95f075761dc0" target="_blank" rel="noopener">这里</a></p>
-<p>⑥设置R的java环境<br>在shell里面输入</p>
-<blockquote>
-<p>$ R CMD javareconf</p>
-</blockquote>
-<p>在R里面输入：</p>
-<blockquote>
-<p>install.packages(‘rJava’, depentences = T)</p>
-</blockquote>
-<p>如上两步报错，则执行下面的命令,如果还是报错，自己排查</p>
-<blockquote>
-<p>$ sudo apt-get install default-jdk</p>
-</blockquote>
-<blockquote>
-<p>$ sudo apt-get install r-cran-rjava</p>
-</blockquote>
-<p>⑦安装unixODBC<br>这一步目的是为了R连接MSSQL等数据库，进行数据交互。<br>首先进入<a href="https://www.linuxidc.com/Linux/2011-05/36367.htm" target="_blank" rel="noopener">下载页</a>下载文件，接着进行解压安装。</p>
-<p><em>参考命令如下，记得把软件版本换成对应的</em></p>
-<blockquote>
-<p>$ sudo tar xzf unixODBC-*.tar.gz </p>
-</blockquote>
-<blockquote>
-<p>$ sudo cd unixODBC-* </p>
-</blockquote>
-<blockquote>
-<p>$ sudo</p>
-</blockquote>
-<blockquote>
-<p>./configure </p>
-</blockquote>
-<blockquote>
-<p>$ sudo make</p>
-</blockquote>
-<blockquote>
-<p>$ sudo make install</p>
-</blockquote>
-<h6 id="注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装"><a href="#注意：-configure的时候也有可能提示找不到某些依赖库-则下载这些依赖库的源码-编译-安装" class="headerlink" title="注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装."></a><em>注意：./configure的时候也有可能提示找不到某些依赖库.则下载这些依赖库的源码,编译,安装.</em></h6><p>⑧如果你用的是MSSQL，则还需要安装 FreeTDS<br>首先去<a href="ftp://ftp.freetds.org/pub/freetds/stable/" target="_blank" rel="noopener">下载页</a>下载安装文件，接着进行解压安装。</p>
-<p>1）安装，这一步很直接，使用root权限就可以了。</p>
-<blockquote>
-<p>$ tar xzf freetds-<em>.tgz<br>$ cd freetds-</em><br>$ ./configure –with-unixodbc=/usr/local –with-tdsver=7.0<br>$ sudo make<br>$ sudo su<br>$ sudo make install</p>
-</blockquote>
-<p>2）配置文件<br>这一步的目的是向unixODBC 登记 FreeTDS 驱动。<br>首先是修改 /etc/odbcinst.ini，运行下面的命令即可修改。</p>
-<blockquote>
-<p>$ cd /usr/local/etc </p>
-</blockquote>
-<blockquote>
-<p>$ sudo gedit /usr/local/etc/odbc.ini</p>
-</blockquote>
-<p><em>修改参考样式如下：</em></p>
-<blockquote>
-<p>[ODBC Data Sources]<br>sql_test = MS SQL td test3<br>[sql_test]<br>Driver = /usr/local/lib/libtdsodbc.so<br>Description  = MSS SQL td test3<br>Server       = 192.12.27.43<br>Port         = 8837<br>User         = sa<br>Password     = 12345<br>Database     = test_db<br>Option       = 3<br>Socket       =<br>Trace        = No<br>TDS_VERSION  = 7.0<br>[Default]<br>Driver  = /usr/local/lib/libtdsodbc.so</p>
-</blockquote>
-<p>⑨安装R包RODBC  ,验证数据库配置是否成功</p>
-<blockquote>
-<p>library(RODBC)<br>sh &lt;- odbcConnect(‘sql_test’,uid = ‘sa’,pwd =’12345’)<br>ata &lt;- sqlQuery(sh,”SQL语句”)</p>
-</blockquote>
-<p>ps:</p>
-<blockquote>
-<p>上面安装R包RODBC如报错则使用下面的命令先安装依赖<br>sudo apt-get install libiodbc2-dev</p>
-</blockquote>
-<p>如果你已经看到这，说明前面的铺垫工作已经进行好了。</p>
-<p><strong>3、安装shiny-sever-pro</strong><br>说真的，没有什么比官网更好的文档了。<br>按照<a href="https://www.rstudio.com/products/shiny/download-server/" target="_blank" rel="noopener">传送门</a>去运行相关命令就行了。</p>
-<blockquote>
-<p>好好看看我的眼，好好看看我的眼，以前我眼都是你，现在，我的眼都是文档。</p>
-</blockquote>
-<p>如果看到这里，你就安装好了shiny-server整个环境需求，接下来就安心去写展示脚本和进行一下更深入的探索吧，例如<strong>权限控制</strong>、<strong>负载均衡</strong>等等。</p>
 <h2 id="三、结尾"><a href="#三、结尾" class="headerlink" title="三、结尾"></a>三、结尾</h2><p>对了，我的展示案例是发布在shinyapps.io上，我这里是为了简单。</p>
 <p>如果部署shiny app官方有两种方式，一是官方的提供的平台，一个就是自己部署服务器。一般来说，内部数据都是要求保密的，所以都是自己部署公司内部的平台。</p>
-<p>如果你还有更多的想法，也可以沟通，如果还有其他我能帮助你的也联系我。<br>谢谢，喵生一乐。</p>
+<p>以上就是一个简单教程，如果你需要了解更多可以去看看官方文档和相关资料。<br><strong>如果你想开箱即用以及定制更齐全的服务器（含数据库配置、更多模块配置、shiny精美的使用模板脚本）可以联系我，我可以帮你解决相关问题。</strong></p>
+<p>谢谢你的观看，喵生一乐。</p>
 
       
 
@@ -323,11 +243,23 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据菜谱</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">R</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">服务器</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">可视化</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">另一种可能</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据菜谱</a>
         		</li>
       		
 		</ul>
@@ -408,7 +340,7 @@
   
   
     <a href="/2018/05/19/数据-线上化报表P方案/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">线上报表P方案</div>
+      <div class="article-nav-title">另一种可能系列之Superset</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -530,6 +462,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">阿猫笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">喵欢</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">岛人笔记</a>
               </li>
              
@@ -538,11 +478,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">阿猫笔记</a>
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">喵欢</a>
+                <a href="javascript:void(0)" class="js-tag color4">服务器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">另一种可能</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,15 +502,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">可视化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一锤子买卖</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">过往</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,6 +515,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">怀念</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">过往</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">R/Python/Java/docker</a>
               </li>
             
             <div class="clearfix"></div>
